@@ -46,6 +46,7 @@
       <p class="lede">Every project here is live and free to open. Most are a single HTML file that runs in the browser with nothing to install.</p>
       <nav class="jump" aria-label="On this page">
         <ul>
+          <li><a href="#demos-heading">Business demos</a></li>
           <li><a href="#learn-heading">Learning and tools</a></li>
           <li><a href="#games-heading">Games</a></li>
         </ul>
@@ -54,6 +55,76 @@
   </section>
 
   <div class="wrap section pt-4">
+    <section class="group" aria-labelledby="demos-heading">
+      <div class="group-head">
+        <h2 id="demos-heading">Business demos</h2>
+        <p>Small working versions of jobs businesses hire me for. Each opens with made-up sample data. Nothing you load leaves your device, except in the AI demo's live mode, which says exactly what it sends.</p>
+      </div>
+      <div class="projects">
+        <article class="project project--wide">
+          <div class="scene-wrap" data-scene="email-intake"></div>
+          <div>
+            <h3>Email to job ticket</h3>
+            <p>An AI model reads a customer email for a made-up plumbing company and drafts job tickets and a reply. Then code checks that every field quotes the email, and shows anything the model made up that the checks caught.</p>
+            <ul class="facts">
+              <li>Urgency matched the expected answer for 18 of 18 jobs in its eval run</li>
+              <li>Every field shown is checked against the email's own words</li>
+              <li>Recorded samples work for anyone, and a free live mode reads your own made-up email</li>
+            </ul>
+            <div class="project-links"><a href="https://casimbahadar.github.io/email-intake/">Open the demo</a><a href="https://github.com/casimbahadar/email-intake">View code</a></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="scene-wrap" data-scene="data-cleanup"></div>
+          <h3>Customer list cleanup</h3>
+          <p>Load a customer spreadsheet and get it back with spacing, capitalization, phone numbers, postal codes and dates fixed. Possible duplicates are listed for a person to confirm, and every change is logged cell by cell.</p>
+          <ul class="facts">
+            <li>Tested to find exactly 42 planted fixes and 17 planted problems in its sample, with no false flags</li>
+            <li>Reads Shopify-style exports, French headers and files saved by Excel on Windows</li>
+            <li>Nothing is merged without the person choosing to</li>
+          </ul>
+          <div class="project-links"><a href="https://casimbahadar.github.io/data-cleanup/">Open the demo</a><a href="https://github.com/casimbahadar/data-cleanup">View code</a></div>
+        </article>
+
+        <article class="project">
+          <div class="scene-wrap" data-scene="reconcile"></div>
+          <h3>Invoice and bank reconciliation</h3>
+          <p>Load invoices and a bank statement. Payments are matched by invoice number, or by amount and date, and whatever is left becomes a short list for a person, each item with the reason it was flagged.</p>
+          <ul class="facts">
+            <li>Flags unpaid, partly paid and duplicate payments, and HST that isn't 13%</li>
+            <li>Handles RBC-style and TD-style bank export layouts, including files with no header row</li>
+            <li>Leftover payments can be matched by hand, and each hand match can be undone</li>
+          </ul>
+          <div class="project-links"><a href="https://casimbahadar.github.io/accounting-reconciliation/">Open the demo</a><a href="https://github.com/casimbahadar/accounting-reconciliation">View code</a></div>
+        </article>
+
+        <article class="project">
+          <div class="scene-wrap" data-scene="job-intake"></div>
+          <h3>Job request intake and tracker</h3>
+          <p>A request form for a made-up plumbing company. One entry produces a priority, a job checklist, a message for the customer, a calendar file and a spreadsheet row, and the office tracks each job on a status board.</p>
+          <ul class="facts">
+            <li>Priority comes from rules printed on the page</li>
+            <li>A gas smell shows safety steps instead of booking a visit</li>
+            <li>Stays in the browser and doesn't connect to any outside service</li>
+          </ul>
+          <div class="project-links"><a href="https://casimbahadar.github.io/job-intake/">Open the demo</a><a href="https://github.com/casimbahadar/job-intake">View code</a></div>
+        </article>
+
+        <article class="project">
+          <div class="scene-wrap" data-scene="time-audit"></div>
+          <h3>Workflow time audit</h3>
+          <p>List the steps of a task you repeat and see which ones take the most hours a year, worked out only from your own numbers with the formula on screen.</p>
+          <ul class="facts">
+            <li>Shows the time a task takes now, not promised savings</li>
+            <li>Every step shows its own arithmetic</li>
+            <li>Ends with a summary to copy and a CSV download</li>
+          </ul>
+          <div class="project-links"><a href="https://casimbahadar.github.io/time-audit/">Open the demo</a><a href="https://github.com/casimbahadar/time-audit">View code</a></div>
+        </article>
+      </div>
+    </section>
+
     <section class="group" aria-labelledby="learn-heading">
       <div class="group-head">
         <h2 id="learn-heading">Learning and tools</h2>

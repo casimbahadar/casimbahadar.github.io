@@ -206,6 +206,102 @@ const SCENES = {
     s += '<circle cx="120" cy="90" r="15" class="f-violet"/>';
     s += '<g class="a-spin"><rect x="118.5" y="44" width="3" height="46" rx="1.5" class="f-sun"/><circle cx="120" cy="44" r="3.5" class="f-sun"/></g>';
     return s;
+  },
+
+  "data-cleanup"() {
+    let s = '<rect width="240" height="180" class="f-mist"/><rect x="24" y="20" width="192" height="140" rx="6" class="f-paper s-line"/>';
+    s += '<rect x="24" y="20" width="192" height="18" rx="6" class="f-lav"/><rect x="24" y="30" width="192" height="8" class="f-lav"/>';
+    const cw = 38.4, fixed = { "1,2": 0.2, "2,0": 0.6, "3,3": 1.0, "5,1": 1.4 }, flagged = { "2,4": 0.8, "4,2": 1.2 };
+    for (let c = 0; c < 5; c++) s += `<rect x="${(24 + c * cw + 7).toFixed(1)}" y="26" width="22" height="6" rx="3" class="f-paper"/>`;
+    for (let r = 0; r < 6; r++) {
+      const y = 38 + r * 20;
+      if (r) s += `<rect x="24" y="${y}" width="192" height="1" class="f-line"/>`;
+      for (let c = 0; c < 5; c++) {
+        const x = 24 + c * cw, key = r + "," + c;
+        if (fixed[key] !== undefined) s += `<rect x="${(x + 4).toFixed(1)}" y="${y + 4}" width="${(cw - 8).toFixed(1)}" height="12" rx="3" class="a-pop f-violet" style="--d:${fixed[key]}s"/>`;
+        else if (flagged[key] !== undefined) s += `<rect x="${(x + 4).toFixed(1)}" y="${y + 4}" width="${(cw - 8).toFixed(1)}" height="12" rx="3" class="a-pop f-rose" style="--d:${flagged[key]}s"/>`;
+        else s += `<rect x="${(x + 7).toFixed(1)}" y="${y + 7}" width="${(14 + ((r * 7 + c * 5) % 12)).toFixed(0)}" height="6" rx="3" class="f-line"/>`;
+      }
+    }
+    for (let c = 1; c < 5; c++) s += `<rect x="${(24 + c * cw).toFixed(1)}" y="38" width="1" height="120" class="f-line"/>`;
+    s += '<rect x="24" y="20" width="2.5" height="140" class="a-sweep f-violet"/>';
+    return s;
+  },
+
+  "reconcile"() {
+    let s = '<rect width="240" height="180" class="f-mist"/>';
+    s += '<text x="18" y="22" class="svg-muted">Invoices</text><text x="222" y="22" text-anchor="end" class="svg-muted">Bank</text>';
+    const rows = [34, 62, 90, 118, 146];
+    const links = [[0, 1], [1, 0], [2, 2], [3, 4]];
+    links.forEach(([a, b], i) => {
+      s += `<path d="M96 ${rows[a] + 10} C120 ${rows[a] + 10} 120 ${rows[b] + 10} 144 ${rows[b] + 10}" pathLength="1" class="a-draw s-route" style="animation-delay:${(i * 0.3).toFixed(1)}s"/>`;
+    });
+    rows.forEach((y, i) => {
+      s += i === 4
+        ? `<rect x="18" y="${y}" width="78" height="20" rx="6" class="chip-q"/>`
+        : `<rect x="18" y="${y}" width="78" height="20" rx="6" class="chip"/>`;
+      s += `<rect x="26" y="${y + 7}" width="${30 + (i * 9) % 20}" height="6" rx="3" class="f-line"/>`;
+      s += i === 3
+        ? `<rect x="144" y="${y}" width="78" height="20" rx="6" class="a-pop f-rose-soft s-line" style="--d:1.3s"/>`
+        : `<rect x="144" y="${y}" width="78" height="20" rx="6" class="chip"/>`;
+      s += `<rect x="152" y="${y + 7}" width="${24 + (i * 13) % 26}" height="6" rx="3" class="f-line"/>`;
+    });
+    [[96, 44], [96, 72], [96, 100], [96, 128]].forEach(([x, y], i) => { s += `<circle cx="${x}" cy="${y}" r="3.5" class="a-pop f-violet" style="--d:${(0.2 + i * 0.3).toFixed(1)}s"/>`; });
+    return s;
+  },
+
+  "job-intake"() {
+    let s = '<rect width="240" height="180" class="f-mist"/><rect x="16" y="18" width="86" height="144" rx="8" class="f-paper s-line"/>';
+    [34, 58, 82, 106].forEach((y, i) => {
+      s += `<rect x="26" y="${y - 8}" width="${26 + (i * 11) % 18}" height="5" rx="2.5" class="f-lav2"/>`;
+      s += `<rect x="26" y="${y}" width="66" height="12" rx="4" class="f-mist s-line"/>`;
+    });
+    s += '<rect x="26" y="130" width="66" height="18" rx="9" class="f-violet"/>';
+    const outs = [38, 90, 140];
+    outs.forEach((y, i) => { s += `<path d="M102 90 C122 90 120 ${y} 138 ${y}" pathLength="1" class="a-draw s-route" style="animation-delay:${(i * 0.3).toFixed(1)}s"/>`; });
+    s += '<g class="a-pop" style="--d:0.4s"><rect x="140" y="16" width="84" height="46" rx="6" class="f-paper s-line"/><rect x="140" y="16" width="84" height="12" rx="6" class="f-lav"/><rect x="140" y="22" width="84" height="6" class="f-lav"/>';
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 6; c++) s += `<rect x="${148 + c * 12}" y="${33 + r * 9}" width="8" height="6" rx="1.5" class="${r === 1 && c === 3 ? "f-violet" : "f-line"}"/>`;
+    s += '</g><g class="a-pop" style="--d:0.8s"><path d="M150 70 H216 A8 8 0 0 1 224 78 V100 A8 8 0 0 1 216 108 H160 L150 116 V108 A8 8 0 0 1 142 100 V78 A8 8 0 0 1 150 70Z" class="f-paper s-line"/>';
+    s += '<rect x="152" y="80" width="60" height="5" rx="2.5" class="f-lav2"/><rect x="152" y="90" width="48" height="5" rx="2.5" class="f-lav2"/></g>';
+    s += '<g class="a-pop" style="--d:1.2s"><rect x="140" y="124" width="84" height="38" rx="6" class="f-paper s-line"/>';
+    for (let c = 0; c < 4; c++) { s += `<rect x="${144 + c * 20}" y="130" width="16" height="10" rx="2" class="f-line"/><rect x="${144 + c * 20}" y="146" width="16" height="10" rx="2" class="f-lav2"/>`; }
+    s += '</g>';
+    return s;
+  },
+
+  "time-audit"() {
+    let s = '<rect width="240" height="180" class="f-mist"/><rect x="16" y="16" width="208" height="148" rx="8" class="f-paper s-line"/>';
+    s += '<text x="30" y="38" class="svg-muted">Hours a year</text>';
+    const hours = [60, 27, 26, 25, 17.6];
+    hours.forEach((h, i) => {
+      const y = 52 + i * 22;
+      s += `<circle cx="36" cy="${y + 6}" r="8" class="f-lav"/><text x="36" y="${y + 10}" text-anchor="middle" class="svg-text">${i + 1}</text>`;
+      s += `<rect x="52" y="${y}" width="${(104 * h / 60).toFixed(1)}" height="12" rx="6" class="a-grow ${i === 0 ? "f-violet" : "f-lav2"}" style="--d:${(i * 0.2).toFixed(1)}s"/>`;
+      s += `<text x="212" y="${y + 10}" text-anchor="end" class="svg-muted">${h.toFixed(1)}</text>`;
+    });
+    return s;
+  },
+
+  "email-intake"() {
+    let s = '<rect width="240" height="180" class="f-mist"/>';
+    s += '<text x="14" y="19" class="svg-muted">Email</text><text x="226" y="19" text-anchor="end" class="svg-muted">Ticket</text>';
+    s += '<rect x="14" y="28" width="100" height="138" rx="8" class="f-paper s-line"/><rect x="140" y="28" width="86" height="138" rx="8" class="f-paper s-line"/>';
+    const marks = { 1: 0, 4: 1, 6: 2 }, rows = [44, 78, 112];
+    for (let i = 0; i < 9; i++) {
+      const y = 38 + i * 14;
+      if (marks[i] !== undefined) s += `<rect x="20" y="${y - 2}" width="${70 + (i * 7) % 18}" height="10" rx="3" class="f-lav"/>`;
+      else s += `<rect x="22" y="${y}" width="${40 + (i * 13) % 44}" height="6" rx="3" class="f-line"/>`;
+    }
+    Object.entries(marks).forEach(([line, k]) => {
+      const y1 = 38 + Number(line) * 14 + 3, y2 = rows[k] + 9;
+      s += `<path d="M110 ${y1} C126 ${y1} 126 ${y2} 146 ${y2}" pathLength="1" class="a-draw s-route" style="animation-delay:${(k * 0.3).toFixed(1)}s"/>`;
+    });
+    rows.forEach((y, k) => {
+      s += `<g class="a-pop" style="--d:${(0.4 + k * 0.3).toFixed(1)}s"><circle cx="157" cy="${y + 9}" r="9" class="f-lav"/><text x="157" y="${y + 14}" text-anchor="middle" class="svg-text">${k + 1}</text>`;
+      s += `<rect x="172" y="${y + 5}" width="${44 - k * 8}" height="8" rx="4" class="f-lav2"/></g>`;
+    });
+    s += '<rect x="148" y="142" width="70" height="14" rx="4" class="a-pop f-rose-soft s-line" style="--d:1.4s"/>';
+    return s;
   }
 };
 

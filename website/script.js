@@ -4,8 +4,8 @@
    email: the address the contact form and email links use.
    linkedin: your full profile URL. Leave it empty to hide the LinkedIn links. */
 const CONFIG = {
-  email: "hello@example.com",
-  linkedin: ""
+  email: "casimbahadar@yahoo.ca",
+  linkedin: "https://www.linkedin.com/in/casim-bahadar"
 };
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

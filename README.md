@@ -2,22 +2,6 @@
 
 Personal freelance site: Home, Work, Services, About and Contact. Plain HTML, CSS and JavaScript in one flat folder, no build step.
 
-## Before publishing
-
-Open `script.js` and edit the `CONFIG` block at the top:
-
-- `email`: the address the contact form and every email link use.
-- `linkedin`: your full profile URL, or leave it empty to hide LinkedIn.
-
-## Publish on GitHub Pages
-
-1. Create a public repository named `casimbahadar.github.io`.
-2. Upload every file in this folder to the root of the repository.
-3. In Settings, then Pages, set Source to "Deploy from a branch", choose `main` and `/ (root)`, and save.
-4. The site goes live at https://casimbahadar.github.io/ within a few minutes.
-
-If you publish under a different repository name, update the `og:image` URL in each page's `<head>` so link previews still find `og-image.png`.
-
 ## Brand files
 
 - `favicon.svg` is the Phoenix icon. It is used for the browser tab and next to your name in the header.

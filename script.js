@@ -302,6 +302,32 @@ const SCENES = {
     });
     s += '<rect x="148" y="142" width="70" height="14" rx="4" class="a-pop f-rose-soft s-line" style="--d:1.4s"/>';
     return s;
+  },
+
+  "quote-builder"() {
+    let s = '<rect width="240" height="180" class="f-mist"/><rect x="40" y="14" width="160" height="152" rx="8" class="f-paper s-line"/>';
+    s += '<text x="54" y="37" class="svg-text">Quote</text><rect x="160" y="26" width="26" height="12" rx="3" class="f-lav"/>';
+    [62, 48, 70, 54].forEach((w, i) => {
+      const y = 52 + i * 16;
+      s += `<g class="a-pop" style="--d:${(0.2 + i * 0.25).toFixed(2)}s"><rect x="54" y="${y}" width="${w}" height="6" rx="3" class="f-line"/><rect x="158" y="${y}" width="28" height="6" rx="3" class="f-lav2"/></g>`;
+    });
+    s += '<path d="M54 120 H186" class="s-line"/>';
+    s += '<g class="a-pop" style="--d:1.3s"><text x="54" y="142" class="svg-text">Total</text><text x="186" y="142" text-anchor="end" class="svg-text">$631.33</text></g>';
+    s += '<rect x="54" y="150" width="132" height="6" rx="3" class="a-grow f-violet" style="--d:1.6s"/>';
+    return s;
+  },
+
+  "overdue-invoices"() {
+    let s = '<rect width="240" height="180" class="f-mist"/><rect x="16" y="16" width="208" height="148" rx="8" class="f-paper s-line"/>';
+    s += '<text x="30" y="38" class="svg-muted">Days late</text>';
+    const bands = [["Not due", 6590, "f-lav2"], ["30", 1620.8, "f-lav"], ["60", 3570.25, "f-violet"], ["90", 5905.5, "f-rose"], ["90+", 2150, "f-rose"]];
+    bands.forEach(([label, v, cls], i) => {
+      const y = 50 + i * 22;
+      s += `<text x="30" y="${y + 11}" class="svg-muted">${label}</text>`;
+      s += `<rect x="106" y="${y}" width="${(78 * v / 6590).toFixed(1)}" height="12" rx="6" class="a-grow ${cls}" style="--d:${(i * 0.2).toFixed(1)}s"/>`;
+      if (i > 0) s += `<g class="a-pop" style="--d:${(1 + i * 0.25).toFixed(2)}s"><rect x="192" y="${y - 1}" width="20" height="14" rx="2" class="f-paper s-line"/><path d="M193 ${y} L202 ${y + 7} L211 ${y}" fill="none" class="s-line"/></g>`;
+    });
+    return s;
   }
 };
 

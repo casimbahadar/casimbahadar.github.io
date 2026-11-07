@@ -596,6 +596,17 @@ a {
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes seat { 0% { fill: var(--sun); } 12%, 100% { fill: var(--lav2); } }
 
+.a-clip { transform: translateX(40px); }
+.is-playing .a-clip { animation: clip 3s linear infinite; }
+@keyframes clip { from { transform: translateX(0); } to { transform: translateX(94px); } }
+.s-ring { stroke: var(--line); }
+.ring-mint { stroke: var(--mint); }
+.ring-sun { stroke: var(--sun); }
+.ring-rose { stroke: var(--rose); }
+.a-draw-ring { stroke-dasharray: var(--len); stroke-dashoffset: var(--val); }
+.is-playing .a-draw-ring { animation: ring 1.6s ease-out var(--d, 0s) both; }
+@keyframes ring { from { stroke-dashoffset: var(--len); } }
+
 
 /* Background band */
 

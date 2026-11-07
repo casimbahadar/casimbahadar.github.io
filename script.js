@@ -141,22 +141,6 @@ const SCENES = {
     return s;
   },
 
-  "region-forge"() {
-    let s = '<rect width="240" height="180" class="f-mist"/>';
-    s += '<path d="M34 96 C30 60 70 34 118 36 C162 38 206 52 206 92 C206 130 170 154 124 152 C80 150 38 132 34 96Z" class="f-paper s-lav2"/>';
-    s += '<circle cx="212" cy="146" r="10" class="f-paper s-lav2"/>';
-    s += '<path d="M92 72 L102 54 L112 72Z M106 72 L118 50 L130 72Z" class="f-lav2"/>';
-    [[62, 70, 6], [70, 78, 5], [160, 130, 6], [150, 136, 5]].forEach(([cx, cy, r]) => { s += `<circle cx="${cx}" cy="${cy}" r="${r}" class="f-mint"/>`; });
-    s += '<path d="M58 104 L86 90 L124 94 L160 72 L184 102 L150 118 L110 128 L80 122" pathLength="1" class="a-draw s-route"/>';
-    [[58, 104], [86, 90], [124, 94], [160, 72], [184, 102], [150, 118], [110, 128], [80, 122]].forEach(([cx, cy], i) => {
-      const gym = i % 3 === 1;
-      s += gym
-        ? `<rect x="${cx - 6}" y="${cy - 6}" width="12" height="12" rx="2" class="a-pop f-violet" style="--d:${(i * 0.3).toFixed(2)}s"/>`
-        : `<circle cx="${cx}" cy="${cy}" r="5" class="a-pop node" style="--d:${(i * 0.3).toFixed(2)}s"/>`;
-    });
-    s += '<rect x="12" y="12" width="92" height="26" rx="8" class="chip"/><text x="58" y="30" text-anchor="middle" class="svg-muted">Seed 4821</text>';
-    return s;
-  },
 
   "waypack"() {
     let s = '<rect width="240" height="180" class="f-paper"/>';
@@ -173,38 +157,86 @@ const SCENES = {
     return s;
   },
 
-  "ashen"() {
-    const ox = 24, oy = 30, c = 24;
-    const unit = [1, 2], enemy = [6, 2];
+
+
+  "sticker-yard"() {
     let s = '<rect width="240" height="180" class="f-mist"/>';
-    for (let r = 0; r < 5; r++) {
-      for (let col = 0; col < 8; col++) {
-        const dist = Math.abs(col - unit[0]) + Math.abs(r - unit[1]);
-        const threat = Math.abs(col - enemy[0]) + Math.abs(r - enemy[1]) === 1;
-        let cls = "f-paper";
-        if (threat) cls = "f-rose-soft";
-        else if (dist > 0 && dist <= 3) cls = "f-lav";
-        s += `<rect x="${ox + col * c}" y="${oy + r * c}" width="${c}" height="${c}" class="f-paper s-line"/>`;
-        if (cls !== "f-paper") s += `<rect x="${ox + col * c + 2}" y="${oy + r * c + 2}" width="${c - 4}" height="${c - 4}" rx="3" class="${cls}"/>`;
+    s += '<circle cx="200" cy="34" r="16" class="f-sun"/>';
+    s += '<path d="M0 120 C60 108 180 108 240 120 V180 H0Z" class="f-mint"/>';
+    for (let x = 12; x < 240; x += 24) s += `<rect x="${x}" y="98" width="8" height="30" rx="3" class="f-paper"/>`;
+    s += '<rect x="0" y="106" width="240" height="5" class="f-paper"/>';
+    const stickers = [
+      [46, 150, "star", "f-sun"], [96, 140, "heart", "f-rose"], [146, 154, "flower", "f-lav2"],
+      [194, 142, "star", "f-violet"], [70, 62, "flower", "f-rose"], [130, 54, "heart", "f-lav2"]
+    ];
+    stickers.forEach(([x, y, kind, cls], i) => {
+      let shape;
+      if (kind === "star") {
+        let pts = [];
+        for (let k = 0; k < 10; k++) { const r = k % 2 ? 7 : 16; const a = -Math.PI / 2 + k * Math.PI / 5; pts.push(`${(x + r * Math.cos(a)).toFixed(1)},${(y + r * Math.sin(a)).toFixed(1)}`); }
+        shape = `<polygon points="${pts.join(" ")}" class="${cls}"/>`;
+      } else if (kind === "heart") {
+        shape = `<path d="M${x} ${y + 12} C${x - 20} ${y - 2} ${x - 10} ${y - 16} ${x} ${y - 6} C${x + 10} ${y - 16} ${x + 20} ${y - 2} ${x} ${y + 12}Z" class="${cls}"/>`;
+      } else {
+        shape = [0, 72, 144, 216, 288].map(a => { const r = a * Math.PI / 180; return `<circle cx="${(x + 8 * Math.cos(r)).toFixed(1)}" cy="${(y + 8 * Math.sin(r)).toFixed(1)}" r="7" class="${cls}"/>`; }).join("") + `<circle cx="${x}" cy="${y}" r="5" class="f-sun"/>`;
       }
-    }
-    s += '<path d="M180 80 L190 90 L180 100 L170 90Z" class="f-rose s-ink"/>';
-    s += '<g class="a-march"><circle cx="60" cy="90" r="8" class="f-violet"/><rect x="58" y="72" width="2" height="12" class="f-ink"/><path d="M60 72 L70 75 L60 78Z" class="f-sun"/></g>';
+      s += `<g class="a-pop" style="--d:${(i * 0.45).toFixed(2)}s"><circle cx="${x}" cy="${y}" r="21" class="f-paper"/>${shape}</g>`;
+    });
+    return s;
+  },
+  "baat-cheet"() {
+    let s = '<rect width="240" height="180" class="f-mist"/>';
+    s += '<g class="a-pop" style="--d:0s"><rect x="16" y="18" width="150" height="40" rx="12" class="f-paper s-line"/><path d="M34 58 l-6 12 l18 -12z" class="f-paper"/><text x="30" y="43" class="svg-text">Aap kaise hain?</text></g>';
+    s += '<g class="a-pop" style="--d:0.8s"><rect x="78" y="74" width="146" height="40" rx="12" class="f-violet"/><path d="M204 114 l8 12 l-18 -12z" class="f-violet"/><text x="94" y="99" class="svg-text" style="fill:#fff">Main theek hoon</text></g>';
+    s += '<line x1="30" y1="150" x2="210" y2="150" class="s-grid"/>';
+    [["1", 30], ["3", 75], ["7", 120], ["21", 165], ["60", 210]].forEach(([d, x], i) => {
+      s += `<g class="a-pop" style="--d:${(1.4 + i * 0.3).toFixed(2)}s"><circle cx="${x}" cy="150" r="9" class="${i < 3 ? "f-lav2" : "f-paper s-line"}"/><text x="${x}" y="174" text-anchor="middle" class="svg-muted">${d}</text></g>`;
+    });
+    return s;
+  },
+  "clip-and-play"() {
+    let s = '<rect width="240" height="180" class="f-mist"/>';
+    s += '<rect x="72" y="18" width="100" height="72" rx="6" class="f-lav"/>';
+    const hs = [10, 18, 26, 14, 30, 22, 36, 28, 18, 40, 32, 24, 44, 36, 26, 38, 20, 30, 16, 26, 34, 22, 14, 20, 12];
+    hs.forEach((h, i) => {
+      const x = 16 + i * 8.6; const inClip = x > 72 && x < 172;
+      s += `<rect x="${x.toFixed(1)}" y="${54 - h / 2}" width="4.5" height="${h}" rx="2" class="${inClip ? "f-violet" : "f-lav2"}"/>`;
+    });
+    s += '<rect x="70" y="14" width="4" height="80" rx="2" class="f-ink"/><rect x="170" y="14" width="4" height="80" rx="2" class="f-ink"/>';
+    s += '<rect x="74" y="16" width="2.5" height="76" class="a-clip f-sun"/>';
+    s += '<rect x="24" y="110" width="150" height="10" rx="5" class="f-line"/>';
+    s += '<rect x="24" y="130" width="192" height="14" rx="7" class="f-violet"/><rect x="24" y="130" width="110" height="14" rx="7" class="a-grow f-sun" style="--d:0.3s"/>';
+    s += '<rect x="24" y="156" width="126" height="10" rx="5" class="f-line"/>';
     return s;
   },
 
-  "blackened"() {
-    let s = '<rect width="240" height="180" class="f-ink"/><circle cx="120" cy="90" r="76" class="f-ink2"/>';
-    for (let i = 0; i < 8; i++) {
-      const a = (i * 45 * Math.PI) / 180;
-      const x = (120 + 58 * Math.sin(a)).toFixed(1);
-      const y = (90 - 58 * Math.cos(a)).toFixed(1);
-      s += i === 5
-        ? `<circle cx="${x}" cy="${y}" r="11" class="f-rose"/>`
-        : `<circle cx="${x}" cy="${y}" r="11" class="a-seat f-lav2" style="--d:${(i * 0.5).toFixed(1)}s"/>`;
+  "grand-calendar"() {
+    let s = '<rect width="240" height="180" class="f-mist"/><rect x="16" y="14" width="208" height="152" rx="12" class="f-paper"/>';
+    s += '<rect x="16" y="14" width="208" height="28" rx="12" class="f-violet"/><rect x="16" y="30" width="208" height="12" class="f-violet"/>';
+    s += '<text x="30" y="33" class="svg-text" style="fill:#fff">This weekend</text>';
+    const cw = 27, ch = 22, ox = 26, oy = 50;
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 7; c++) {
+      s += `<rect x="${ox + c * cw}" y="${oy + r * ch}" width="${cw - 4}" height="${ch - 4}" rx="4" class="f-mist"/>`;
     }
-    s += '<circle cx="120" cy="90" r="15" class="f-violet"/>';
-    s += '<g class="a-spin"><rect x="118.5" y="44" width="3" height="46" rx="1.5" class="f-sun"/><circle cx="120" cy="44" r="3.5" class="f-sun"/></g>';
+    [[1, 1, "f-mint", 0.2], [3, 1, "f-sun", 0.6], [5, 2, "f-rose", 1.0], [2, 3, "f-lav2", 1.4], [6, 3, "f-mint", 1.8], [4, 4, "f-sun", 2.2]].forEach(([c, r, cls, d]) => {
+      s += `<rect x="${ox + c * cw + 3}" y="${oy + r * ch + 5}" width="${cw - 10}" height="8" rx="4" class="a-pop ${cls}" style="--d:${d}s"/>`;
+    });
+    s += '<g class="a-pop" style="--d:2.6s"><rect x="164" y="20" width="48" height="16" rx="8" class="f-sun"/><text x="188" y="32" text-anchor="middle" class="svg-muted" style="fill:#221B35">New</text></g>';
+    return s;
+  },
+
+  "website-check"() {
+    let s = '<rect width="240" height="180" class="f-mist"/>';
+    const scores = [[48, "f-mint", 92], [102, "f-sun", 71], [156, "f-mint", 95], [210, "f-rose", 48]];
+    scores.forEach(([cx, cls, v], i) => {
+      const r = 19, c = 2 * Math.PI * r;
+      s += `<circle cx="${cx - 18}" cy="52" r="${r}" fill="none" stroke-width="7" class="s-ring"/>`;
+      s += `<circle cx="${cx - 18}" cy="52" r="${r}" fill="none" stroke-width="7" stroke-linecap="round" class="a-draw-ring ring-${cls.slice(2)}" style="--len:${c.toFixed(1)};--val:${(c * (1 - v / 100)).toFixed(1)};--d:${(i * 0.3).toFixed(1)}s" transform="rotate(-90 ${cx - 18} 52)"/>`;
+      s += `<text x="${cx - 18}" y="57" text-anchor="middle" class="svg-text">${v}</text>`;
+    });
+    [[102, 120], [124, 96], [146, 140]].forEach(([y, w], i) => {
+      s += `<g class="a-pop" style="--d:${(1.4 + i * 0.35).toFixed(2)}s"><circle cx="34" cy="${y + 5}" r="6" class="${i === 0 ? "f-rose" : "f-sun"}"/><rect x="48" y="${y}" width="${w}" height="10" rx="5" class="f-paper"/></g>`;
+    });
     return s;
   },
 
@@ -363,21 +395,21 @@ if (!reduceMotion) {
 /* ---------- Home hero: the phone that cycles through projects ---------- */
 
 const FEATURED = [
-  { scene: "step-through", kind: "Learning app", name: "Step Through",
-    text: "A coding course that runs offline on a phone. You write real code and watch it run one line at a time.",
-    url: "https://casimbahadar.github.io/step-through/" },
-  { scene: "cadence", kind: "Rhythm game", name: "Cadence",
-    text: "Turns any song you give it, from a MIDI file or an MP3, into a four-lane rhythm game.",
-    url: "https://casimbahadar.github.io/Cadence/" },
-  { scene: "ludo", kind: "Online board game", name: "Ludo Mehfil",
-    text: "Pakistani-style Ludo for phones, with online rooms so family can play from anywhere.",
-    url: "https://casimbahadar.github.io/Ludo-Mehfil/" },
-  { scene: "ai-learners", kind: "Beginner course", name: "AI Learner\u2019s Permit",
-    text: "A free course on using AI assistants, with demos that show how they predict the next word.",
-    url: "https://casimbahadar.github.io/ai-learners/" },
-  { scene: "musical-forge", kind: "Music tools", name: "Musical Forge Studio",
-    text: "Four browser tools for writing game themes, remixing audio, writing sheet music and arranging songs.",
-    url: "https://casimbahadar.github.io/Musical-Forge-Studio/" }
+  { scene: "email-intake", kind: "Business demo", name: "Email to job ticket",
+    text: "Paste a customer email and an AI model drafts a job ticket, with code checking every field against the email.",
+    url: "https://casimbahadar.github.io/email-intake/" },
+  { scene: "grand-calendar", kind: "Events app", name: "Grand Calendar",
+    text: "One free list of Waterloo Region events and programs, gathered from public sources, with filters for families and kids.",
+    url: "https://casimbahadar.github.io/grand-calendar/" },
+  { scene: "sticker-yard", kind: "Kids learning app", name: "Sticker Yard",
+    text: "Reading and math quests from the Ontario curriculum, with stickers to earn and worksheets parents can print.",
+    url: "https://casimbahadar.github.io/sticker-yard/" },
+  { scene: "website-check", kind: "Free tool", name: "Website check",
+    text: "Enter any web address and get a plain-language report on how the site works on a phone and what to fix first.",
+    url: "https://casimbahadar.github.io/website-check/" },
+  { scene: "clip-and-play", kind: "Music app", name: "Clip & Play",
+    text: "A music player that cuts songs out of long recordings and shows lyrics you add, karaoke style.",
+    url: "https://clip-and-play.casimbahadar.workers.dev" }
 ];
 
 const phone = document.querySelector("[data-phone]");
